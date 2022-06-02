@@ -15,7 +15,7 @@ func randomRange(min, max int) int {
 func randomTime(from, until int) *time.Time {
 	now := time.Now()
 	// skip saturday and sunday
-	if now.Day() == 0 || now.Day() == 6 {
+	if now.Weekday() == 0 || now.Weekday() == 6 {
 		return nil
 	}
 	if now.Hour() >= until-1 {
