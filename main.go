@@ -37,18 +37,23 @@ func newSchedule() {
 }
 
 func main() {
+	// schedule messages for right away
 	newSchedule()
+	// find beginning of tomorrow
 	now := time.Now()
-	today := time.Date(now.Year(), now.Month(), now.Day()+1, 0, 0, 0, 0, now.Location())
-	until := time.Until(today)
-	_, _ = fmt.Println("Rescheduling new messages in", until)
-	_ = time.AfterFunc(time.Until(today), func() {
+	tomorrow := time.Date(now.Year(), now.Month(), now.Day()+1, 0, 0, 0, 0, now.Location())
+	untilTomorrow := time.Until(tomorrow)
+	_, _ = fmt.Println("Rescheduling new messages in", untilTomorrow)
+	// schedule main sub-routine to run tomorrow at 0000
+	_ = time.AfterFunc(untilTomorrow, func() {
+		// schedule new messages
 		newSchedule()
 		_, _ = fmt.Println("Rescheduling new messages in", mainCycleRefreshTime)
+		// make ticket to schedule messages every set period of time (in this case 24h)
 		tick := time.NewTicker(mainCycleRefreshTime)
 		quit := make(chan struct{})
 		defer close(quit)
-
+		// start main sub-routine main loop
 		for {
 			select {
 			case <-tick.C:
