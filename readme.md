@@ -6,10 +6,11 @@ This application is meant to connect to slack as a user at set random times in t
 morning and at night and send a message to a particular channel.
 
 ```mermaid
-participant attendance-tc as tc
-participant slack
+sequenceDiagram
+    participant attendance-tc as tc
+    participant slack
 
-tc -> slack: send random clockin time
+    tc -> slack: send random clockin time
 ```
 
 This application requires the following setup:
